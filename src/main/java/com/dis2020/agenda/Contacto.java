@@ -44,6 +44,29 @@ public class Contacto {
 		direccion=ent;
 	}
 	
+	public String getnombre() {
+		return this.nombre;
+	}
+	
+	public String getapellidos() {
+		return this.apellidos;
+	}
+
+	public String getdireccion() {
+		return this.direccion;
+	}
+	
+	public String getemail() {
+		return this.email;
+	}
+	
+	public String getempresa() {
+		return this.empresa;
+	}
+	
+	public String gettelefono() {
+		return this.telefono;
+	}
 
 
 }
