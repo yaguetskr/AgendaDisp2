@@ -8,6 +8,13 @@ public class Contacto {
 	String email;
 	String direccion;
 	
+	
+	
+	public Contacto() {
+		
+	}
+	
+	
 	public Contacto(String nom,String ape,String emp,String tlf,String mail,String dir) {
 		
 		nombre=nom;
