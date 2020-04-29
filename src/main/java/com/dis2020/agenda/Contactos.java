@@ -56,10 +56,31 @@ public void setDireccion(String direccion) {
 	this.direccion = direccion;
 }
 
-public Contactos crear_contacto(Contactos[] c , Contactos c2,int posicion) {
-	c[posicion]= c2;
-	return c[posicion];
+public boolean  leercontacto() {
+	
+	System.out.println("nombre :" + getNombre());
+	System.out.println("apellidos:" + getApellidos());
+	System.out.println("empresa:" + getEmpresa());
+	System.out.println("email :" + getEmail());
+	System.out.println("direccion:" + getDireccion());
+	
+	return true;
 }
+
+public boolean actualizarcontacto(String n,String a,String emp,String ema,String d) {
+	setNombre(n);
+	setApellidos(a);
+	setEmpresa(emp);
+	setEmail(ema);
+	setDireccion(d);
+	return true;
+	
+}
+
+public void eliminarcontacto() {
+	
+}
+
 
 
 }
