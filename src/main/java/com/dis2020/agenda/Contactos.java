@@ -77,9 +77,6 @@ public boolean actualizarcontacto(String n,String a,String emp,String ema,String
 	
 }
 
-public void eliminarcontacto() {
-	
-}
 
 
 

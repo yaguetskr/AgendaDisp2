@@ -17,5 +17,9 @@ public class listaContactos {
 	public void addContacto(Contactos c) {
 		listacontactos.add(c);
 	}
+	public void eliminarContacto(Contactos c) {
+		listacontactos.remove(c);
+	}
+	
 
 }

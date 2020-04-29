@@ -1,9 +1,10 @@
 package com.dis2020.agenda;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.After;
+
 import org.junit.jupiter.api.Test;
 
 class AppTest {
@@ -59,35 +60,28 @@ class AppTest {
     	assertFalse(!contactos.actualizarcontacto("yago", "cabello", "ufv", "654323232", "pozuelo"));                                              
 	}     
 
+	
 	@Test
-	void test() {
-		// fail("Not yet implemented");
-		assertTrue(true);
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@After
-	public void finalize() {
-
-		System.out.println("execution After test");
+	public void testeliminar_contacto() {
+	    contactos = new Contactos("jorge", "delgado", "ufv", "722297344", "pozuelo");   
+		listaContactos c = new listaContactos();
+		c.addContacto(contactos);
+		c.eliminarContacto(contactos);   
+		assertEquals(0, c.getsizelista());
 
 	}
+
+	@Test
+	public void testErroreliminar_contacto() {
+	    contactos = new Contactos("jorge", "delgado", "ufv", "722297344", "pozuelo");   
+		listaContactos c = new listaContactos();    
+		c.addContacto(contactos);
+		c.eliminarContacto(contactos);                                                       
+    	assertNotEquals(1, c.getsizelista());                                              
+	}  
+	
+
+	
+
 
 }
