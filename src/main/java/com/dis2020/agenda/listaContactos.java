@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 public class listaContactos {
 
-	private ArrayList<Contactos> listacontactos;
+	private ArrayList<Contacto> listacontacto;
 
 	public listaContactos() {
-		listacontactos = new ArrayList<Contactos>();
+		listacontacto = new ArrayList<Contacto>();
 
 	}
 
 	public int getsizelista() {
-	return listacontactos.size();
+	return listacontacto.size();
 	}
-	public void addContacto(Contactos c) {
-		listacontactos.add(c);
+	public void addContacto(Contacto c) {
+		listacontacto.add(c);
 	}
-	public void eliminarContacto(Contactos c) {
-		listacontactos.remove(c);
+	public void eliminarContacto(Contacto c) {
+		listacontacto.remove(c);
 	}
 	
 

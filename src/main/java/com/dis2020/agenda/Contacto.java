@@ -91,6 +91,29 @@ public class Contacto {
 		return this.telefono;
 	}
 
-	
+	public boolean  leercontacto() {
+		
+		System.out.println("id:" + getid());
+		System.out.println("nombre :" + getnombre());
+		System.out.println("apellidos:" + getapellidos());
+		System.out.println("empresa:" + getempresa());
+		System.out.println("telefono :" + gettelefono());
+		System.out.println("email :" + getemail());
+		System.out.println("direccion:" + getdireccion());
+		
+		return true;
+	}
+
+	public boolean actualizarcontacto(String n,String a,String emp,String tlf,String ema,String d) {
+		setnombre(n);
+		setapellidos(a);
+		setempresa(emp);
+		settelefono(tlf);
+		setemail(ema);
+		setdireccion(d);
+		setid(generarid(n,a,tlf,d));
+		return true;
+		
+	}
 
 }
