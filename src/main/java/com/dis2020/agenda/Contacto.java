@@ -7,7 +7,7 @@ public class Contacto {
 	String telefono;
 	String email;
 	String direccion;
-	
+	String id;
 	
 	
 	public Contacto() {
@@ -23,7 +23,13 @@ public class Contacto {
 		telefono=tlf;
 		email=mail;
 		direccion=dir;
+		id=generarid(nom,ape,tlf,dir);
 		
+		
+	}
+	
+	public String generarid(String nom,String ape,String num,String dir) {
+		return nom.charAt(0)+ape.charAt(0)+num.charAt(0)+String.valueOf(dir.length());
 		
 	}
 	
@@ -51,6 +57,10 @@ public class Contacto {
 		direccion=ent;
 	}
 	
+	public void setid(String ent) {
+		id=ent;
+	}
+	
 	public String getnombre() {
 		return this.nombre;
 	}
@@ -71,9 +81,16 @@ public class Contacto {
 		return this.empresa;
 	}
 	
+	public String getid() {
+		return this.id;
+	}
+	
+	
+	
 	public String gettelefono() {
 		return this.telefono;
 	}
 
+	
 
 }
