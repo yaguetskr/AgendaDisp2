@@ -104,12 +104,12 @@ public class Contacto {
 		return true;
 	}
 
-	public boolean actualizarcontacto(String n,String a,String emp,String tlf,String ema,String d) {
+	public boolean actualizarcontacto(String n,String a,String emp,String tlf,String e,String d) {
 		setnombre(n);
 		setapellidos(a);
 		setempresa(emp);
 		settelefono(tlf);
-		setemail(ema);
+		setemail(e);
 		setdireccion(d);
 		setid(generarid(n,a,tlf,d));
 		return true;
