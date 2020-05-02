@@ -4,8 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import com.google.gson.Gson;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 
 class AppTest {
 
@@ -79,6 +84,13 @@ class AppTest {
 		c.addContacto(contactos);
 		c.eliminarContacto(contactos);                                                       
     	assertNotEquals(1, c.getsizelista());                                              
+	}  
+	
+	@Test
+	public void testmain() {
+	    MyUI probando = new MyUI();
+	  
+    	assertEquals(0,probando.programa());                                              
 	}  
 	
 

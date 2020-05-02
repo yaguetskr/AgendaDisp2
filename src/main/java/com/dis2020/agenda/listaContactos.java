@@ -1,10 +1,12 @@
 package com.dis2020.agenda;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class listaContactos {
 
-	private ArrayList<Contacto> listacontacto;
+public class listaContactos extends ArrayList<Contacto> {
+
+	private List<Contacto> listacontacto;
 
 	public listaContactos() {
 		listacontacto = new ArrayList<Contacto>();
