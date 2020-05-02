@@ -84,6 +84,11 @@
 	<build>
 		<plugins>
 			<plugin>
+	        	<groupId>com.heroku.sdk</groupId>
+	       	 	<artifactId>heroku-maven-plugin</artifactId>
+	        	<version>3.0.2</version>
+	      	</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.0</version>
@@ -106,6 +111,9 @@
 							<!-- Comment out compile-theme goal to use on-the-fly theme compilation -->
 							<goal>compile-theme</goal>
 						</goals>
+						
+						
+						
 					</execution>
 				</executions>
 			</plugin>
