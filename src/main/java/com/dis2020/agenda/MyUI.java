@@ -1,10 +1,12 @@
 package com.dis2020.agenda;
-
-import java.util.Arrays;
-
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
 import com.vaadin.ui.Grid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -17,8 +19,10 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.HorizontalLayout;
-import java.util.Arrays;
-
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.FileWriter;
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
  * (or tab) or some part of an HTML page where a Vaadin application is embedded.
@@ -28,12 +32,17 @@ import java.util.Arrays;
  */
 @Theme("mytheme")
 public class MyUI extends UI {
+	
+	
+
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
         
-        
+
+        Gson gson = new Gson();
+        Gson gson2 = new Gson();
         Grid<Contacto> tabla = new Grid<>("Contactos");
         
         final TextField name = new TextField();
@@ -47,10 +56,7 @@ public class MyUI extends UI {
         
         List<Contacto> contacts =new ArrayList<Contacto>();
         
-       
-        
-       	contacts.add(new Contacto("Aurelio","Sanchez de la serna","Microsoft","999999","pipo@gmail.com","Calle falsa numero 8"));
-       	contacts.add(new Contacto("Eusebio","afters","NASA","8888888","euse@gmail.com","Calle falsa numero 11"));
+ 
         	
         		
        	VerticalLayout añadir= new VerticalLayout();
@@ -75,33 +81,66 @@ public class MyUI extends UI {
        	Button boton2=new Button ("Modificar contacto");
        	modificar.addComponents(modificarid,modificarnombre,modificarapellido,modificardireccion,modificarempresa,modificarmail,modificartelefono,boton2);       	
        	
-      
+       	HorizontalLayout botones=new HorizontalLayout();
+       	Button leer=new Button ("Leer JSON");
+       	Button crear=new Button ("Crear JSON");
+       	botones.addComponents(leer,crear);
        	
-       	boton1.addClickListener(e ->{
+       	
+       	leer.addClickListener(read ->{
        		
-       		//Notification.show("Exito");
-       		contacts.add(new Contacto(añadirnombre.getValue(),añadirapellido.getValue(),añadirempresa.getValue(),añadirtelefono.getValue(),añadirmail.getValue(),añadirdireccion.getValue()));
-       		
-       		Notification.show(contacts.get(2).getnombre());
+       		try (Reader reader = new FileReader("contactos.json")) {
+
+                // Convert JSON File to Java Object
+                Contacto[] contactos =gson.fromJson(reader, Contacto[].class);
+
+                contacts.addAll(Arrays.asList(contactos));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
        		tabla.getDataProvider().refreshAll();
+       		
+       		
+       	});
+       	
+       	crear.addClickListener(write ->{
+       		
+       		try (FileWriter writer = new FileWriter("contactos.json")) {
+                gson.toJson(contacts, writer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+       		
        	});
        	
        	
-       	boton2.addClickListener(e2 ->{
+       	boton1.addClickListener(add ->{
+       		
+       		
+       		contacts.add(new Contacto(añadirnombre.getValue(),añadirapellido.getValue(),añadirempresa.getValue(),añadirtelefono.getValue(),añadirmail.getValue(),añadirdireccion.getValue()));
+       		tabla.getDataProvider().refreshAll();
+       		Notification.show("Contacto añadido");
+       	});
        	
-       		for(int i=0;i<contacts.size();++i) {
-       			System.out.println(contacts.get(i).getid().length());
-       			System.out.println(modificarid.getValue().length());
-       			System.out.println(modificarid.getValue().toString().equals(contacts.get(i).getid()));
+       	
+       	boton2.addClickListener(mod ->{
+       		int i;
+       		for(i=0;i<contacts.size();++i) {
+       			
        			if( modificarid.getValue().toString().equals(contacts.get(i).getid()) ) {
-       				Notification.show(contacts.get(i).getnombre());
-       				System.out.println(contacts.get(i).getapellidos());
-       				contacts.set(i,new Contacto(modificarnombre.getValue(),modificarapellido.getValue(),modificarempresa.getValue(),modificartelefono.getValue(),modificarmail.getValue(),modificardireccion.getValue() ));
+       				Notification.show("Contacto modificado con éxito");
        				
+       				contacts.set(i,new Contacto(modificarnombre.getValue(),modificarapellido.getValue(),modificarempresa.getValue(),modificartelefono.getValue(),modificarmail.getValue(),modificardireccion.getValue() ));
+       				i=contacts.size()+2;
        				tabla.getDataProvider().refreshAll();
        			}
        			
        			
+       			
+       		}
+       		if(i==contacts.size()) {
+       			Notification.show("No se encontró el contacto");
        			
        		}
        		
@@ -144,9 +183,13 @@ public class MyUI extends UI {
             tabla.setDetailsVisible(person, !tabla.isDetailsVisible(person));
         });
         
-        layout.addComponents(tabla);
+        layout.addComponents(tabla,botones);
+        
+        
+        
         
         setContent(layout);
+        
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
