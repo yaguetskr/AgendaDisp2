@@ -15,6 +15,7 @@ class AppTest {
 	Contacto contactos = null;
 
 	
+	@SuppressWarnings("unused")
 	@Test
 	public void testcontacto() {
 		Contacto contacto= new Contacto();

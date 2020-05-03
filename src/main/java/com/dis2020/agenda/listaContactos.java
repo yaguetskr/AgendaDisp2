@@ -6,6 +6,10 @@ import java.util.List;
 
 public class listaContactos extends ArrayList<Contacto> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Contacto> listacontacto;
 
 	public listaContactos() {

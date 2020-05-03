@@ -1,13 +1,10 @@
 package com.dis2020.agenda;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import com.google.gson.Gson;
 import javax.servlet.annotation.WebServlet;
 import com.vaadin.ui.Grid;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
@@ -19,8 +16,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.HorizontalLayout;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.Reader;
 import java.io.FileWriter;
 /**
@@ -48,6 +43,7 @@ public class MyUI extends UI {
     }
     
 
+@SuppressWarnings("unused")
 public int programa() {
     final VerticalLayout layout = new VerticalLayout();
     
@@ -209,5 +205,6 @@ public int programa() {
     setContent(layout);
     return 0;
 }
+public MyUI() {}
 	
 }
