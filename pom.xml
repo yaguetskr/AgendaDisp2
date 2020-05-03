@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -20,7 +21,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<!-- If there are no local customizations, this can also be "fetch" or "cdn" -->
+		<!-- If there are no local customizations, this can also be "fetch" or 
+			"cdn" -->
 		<vaadin.widgetset.mode>local</vaadin.widgetset.mode>
 	</properties>
 
@@ -30,13 +32,13 @@
 			<url>http://maven.vaadin.com/vaadin-addons</url>
 		</repository>
 	</repositories>
-	
-	
+
+
 	<dependencies>
 		<dependency>
-    			<groupId>com.google.code.gson</groupId>
-    			<artifactId>gson</artifactId>
-    			<version>2.8.5</version>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -44,7 +46,7 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-server</artifactId>
@@ -61,14 +63,14 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-themes</artifactId>
 		</dependency>
-		
-		
+
+
 	</dependencies>
 	<dependencyManagement>
-	
+
 		<dependencies>
-			
-			
+
+
 			<dependency>
 				<groupId>com.vaadin</groupId>
 				<artifactId>vaadin-bom</artifactId>
@@ -79,15 +81,35 @@
 		</dependencies>
 	</dependencyManagement>
 
-	
+
 
 	<build>
 		<plugins>
 			<plugin>
-	        	<groupId>com.heroku.sdk</groupId>
-	       	 	<artifactId>heroku-maven-plugin</artifactId>
-	        	<version>3.0.2</version>
-	      	</plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.0.0-M3</version>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.0</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>3.0.2</version>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -111,9 +133,9 @@
 							<!-- Comment out compile-theme goal to use on-the-fly theme compilation -->
 							<goal>compile-theme</goal>
 						</goals>
-						
-						
-						
+
+
+
 					</execution>
 				</executions>
 			</plugin>
@@ -135,7 +157,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- The Jetty plugin allows us to easily test the development build by
+			<!-- The Jetty plugin allows us to easily test the development build by 
 				running jetty:run on the command line. -->
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
