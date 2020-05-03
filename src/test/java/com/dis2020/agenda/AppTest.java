@@ -4,13 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
+
 
 import org.junit.jupiter.api.Test;
 
-import com.google.gson.Gson;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
+
 
 class AppTest {
 
@@ -27,17 +25,19 @@ class AppTest {
 	public void testcrear_contacto() {
 	    contactos = new Contacto();   
 		listaContactos c = new listaContactos();
+		 int expected=1;
 		c.addContacto(contactos);
-		assertEquals(1, c.getsizelista());
+		assertEquals(expected, c.getsizelista());
 
 	}
 
 	@Test
 	public void testErrorcrear_contacto() {
 	    contactos = new Contacto("jorge", "delgado", "ufv", "722297344","qwerty@gmail.com", "pozuelo");   
-		listaContactos c = new listaContactos();                                        
+		listaContactos c = new listaContactos();   
+		 int expected=0;
 		c.addContacto(contactos);                                                       
-    	assertNotEquals(0, c.getsizelista());                                              
+    	assertNotEquals(expected, c.getsizelista());                                              
 	}  
 	
 	@Test
@@ -71,9 +71,10 @@ class AppTest {
 	public void testeliminar_contacto() {
 	    contactos = new Contacto("jorge", "delgado", "ufv", "722297344","qwerty@gmail.com", "pozuelo");  
 		listaContactos c = new listaContactos();
+		 int expected=0;
 		c.addContacto(contactos);
 		c.eliminarContacto(contactos);   
-		assertEquals(0, c.getsizelista());
+		assertEquals(expected, c.getsizelista());
 
 	}
 
@@ -81,16 +82,17 @@ class AppTest {
 	public void testErroreliminar_contacto() {
 	    contactos = new Contacto("jorge", "delgado", "ufv", "722297344","qwerty@gmail.com", "pozuelo");  
 		listaContactos c = new listaContactos();    
+		 int expected=1;
 		c.addContacto(contactos);
 		c.eliminarContacto(contactos);                                                       
-    	assertNotEquals(1, c.getsizelista());                                              
+    	assertNotEquals(expected, c.getsizelista());                                              
 	}  
 	
 	@Test
 	public void testmain() {
 	    MyUI probando = new MyUI();
-	  
-    	assertEquals(0,probando.programa());                                              
+	  int expected=0;
+    	assertEquals(expected,probando.programa());                                              
 	}  
 	
 
