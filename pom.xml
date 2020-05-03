@@ -35,17 +35,13 @@
 
 
 	<dependencies>
-		<dependency>
-			<groupId>org.junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
-			<scope>test</scope>
-		</dependency>
+
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
-			<scope>test</scope>
+			
 		</dependency>
 
 		<dependency>
@@ -83,7 +79,11 @@
 
 		<dependencies>
 
-
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.2</version>
+			</dependency>
 			<dependency>
 				<groupId>com.vaadin</groupId>
 				<artifactId>vaadin-bom</artifactId>
