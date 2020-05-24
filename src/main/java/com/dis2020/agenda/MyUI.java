@@ -50,7 +50,6 @@ public int programa() {
 
     Gson gson = new Gson();
     Gson gson2 = new Gson();
-   // List<Contacto> contacts =new ArrayList<Contacto>();
     listaContactos contacts = new listaContactos();
     VerticalLayout añadir= new VerticalLayout();	
     VerticalLayout modificar= new VerticalLayout();
@@ -63,12 +62,22 @@ public int programa() {
     final TextField name = new TextField();
     name.setCaption("Type your name here:");
 
-    Button button = new Button("Click Me");
-    button.addClickListener(e -> {
-        layout.addComponent(new Label("Thanks " + name.getValue() 
-                + ", it works!"));
-    });
+    Button hid = new Button("Contacto nuevo");
+    Button hid2 = new Button("Editar contacto");
     
+    
+    try (Reader reader = new FileReader("contactos.json")) {
+
+        // Convert JSON File to Java Object
+        Contacto[] contactos =gson.fromJson(reader, Contacto[].class);
+
+        contacts.addAll(Arrays.asList(contactos));
+      
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+		
   
     
 	TextField añadirnombre=new TextField("Nombre");
@@ -79,7 +88,7 @@ public int programa() {
 	TextField añadirtelefono=new TextField("Telefono");
 	Button boton1=new Button ("Añadir contacto");
 	añadir.addComponents(añadirnombre,añadirapellido,añadirdireccion,añadirempresa,añadirmail,añadirtelefono,boton1);
-	
+	añadir.setVisible(false);
    	
    	
    	
@@ -92,40 +101,32 @@ public int programa() {
    	TextField modificartelefono=new TextField("Telefono");
    	Button boton2=new Button ("Modificar contacto");
    	modificar.addComponents(modificarid,modificarnombre,modificarapellido,modificardireccion,modificarempresa,modificarmail,modificartelefono,boton2);       	
-   	
+   	modificar.setVisible(false);
    
-   	Button leer=new Button ("Leer JSON");
-   	Button crear=new Button ("Crear JSON");
-   	botones.addComponents(leer,crear);
+
+    hid.addClickListener(e -> {
+        
+    	if (añadir.isVisible()){
+    		
+    		añadir.setVisible(false);
+    	}else {
+    		añadir.setVisible(true);
+    	}
+    	
+    });
    	
    	
-   	leer.addClickListener(read ->{
-   		
-   		try (Reader reader = new FileReader("contactos.json")) {
+    hid2.addClickListener(e -> {
+        
+    	if (modificar.isVisible()){
+    		
+    		modificar.setVisible(false);
+    	}else {
+    		modificar.setVisible(true);
+    	}
+    	
+    });
 
-            // Convert JSON File to Java Object
-            Contacto[] contactos =gson.fromJson(reader, Contacto[].class);
-
-            contacts.addAll(Arrays.asList(contactos));
-          
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-   		tabla.getDataProvider().refreshAll();
-   		
-   		
-   	});
-   	
-   	crear.addClickListener(write ->{
-   		
-   		try (FileWriter writer = new FileWriter("contactos.json")) {
-            gson.toJson(contacts, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-   		
-   	});
    	
    	
    	boton1.addClickListener(add ->{
@@ -134,6 +135,12 @@ public int programa() {
    		contacts.add(new Contacto(añadirnombre.getValue(),añadirapellido.getValue(),añadirempresa.getValue(),añadirtelefono.getValue(),añadirmail.getValue(),añadirdireccion.getValue()));
    		tabla.getDataProvider().refreshAll();
    		Notification.show("Contacto añadido");
+   		//Se añade el contacto al JSON
+   		try (FileWriter writer = new FileWriter("contactos.json")) {
+            gson.toJson(contacts, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
    	});
    	
    	
@@ -160,7 +167,7 @@ public int programa() {
    	});
    	
    	HorizontalLayout formularios = new HorizontalLayout();
-   	formularios.addComponents(añadir,modificar);
+   	formularios.addComponents(hid,añadir,hid2,modificar);
    	layout.addComponent(formularios);
    	formularios.setSizeFull();
     
@@ -168,10 +175,27 @@ public int programa() {
     
     tabla.setSizeFull();
     tabla.setItems(contacts);
-    tabla.addColumn(Contacto::getid).setCaption("id");
+    
+    tabla.getEditor().setEnabled(false);
+    tabla.getEditor().setSaveCaption("Modificar");
+    tabla.getEditor().setCancelCaption("Cancelar");
+    
     tabla.addColumn(Contacto::getnombre).setCaption("Nombre");
     tabla.addColumn(Contacto::getapellidos).setCaption("Apellidos");
     tabla.addColumn(Contacto::gettelefono).setCaption("Telefono");
+
+    tabla.addComponentColumn(item -> new Button("BORRAR", click -> {
+        contacts.remove(item);
+        tabla.getDataProvider().refreshAll();
+        
+        try (FileWriter writer = new FileWriter("contactos.json")) {
+            gson.toJson(contacts, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }));
+
     
     
     
@@ -183,7 +207,7 @@ public int programa() {
         Label label2 = new Label("    \nEmail: "+Contacto.getemail()+"\n");
         Label label3 = new Label("    \nDireccion: "+Contacto.getdireccion()+"\n");
         Label label4 = new Label("    \nID: "+Contacto.getid()+"\n");
-        
+      
         
         
         
@@ -191,6 +215,7 @@ public int programa() {
         sublayout.addComponents(label,label2,label3,label4);  
         return sublayout;
     });
+    
     
     tabla.addItemClickListener(click -> {
         final Contacto person = click.getItem();
